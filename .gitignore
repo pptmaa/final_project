@@ -4,5 +4,6 @@
 .Ruserdata
 *Rproj
 *csv
-_site/
+_site/ 
+data.R
 /.quarto/
