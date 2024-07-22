@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*Rproj
+*csv
+data.R
+_site/
+/.quarto/

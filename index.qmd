@@ -1,0 +1,29 @@
+---
+title: "website"
+execute: 
+  echo: false
+---
+
+```{r}
+#| message: false
+#| label: setup
+
+library(tidyverse)
+library(readr)
+library(ggplot2)
+library(hrbrthemes)
+summary <- read_csv("summary.csv")
+offensive <- read_csv("offensive.csv")
+xg <- read_csv("xg.csv")
+passing <- read_csv("passing.csv")
+away <- read_csv("away.csv")
+home <- read_csv("home.csv")
+```
+
+
+```{r}
+away |>
+  ggplot(aes(x = Rating, y = Player, color = Player)) + 
+  geom_point() 
+```
+
