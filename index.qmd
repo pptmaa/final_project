@@ -57,3 +57,42 @@ ggplot(summary, aes(y = mins_age, x = reorder(Player_label, mins_age))) +
 
 
 
+```{r, fig.width=20, fig.height=10}
+theme_set(theme_bw())
+
+xg$Player <- factor(xg$Player, levels = xg$Player[order(xg$xGDiff)])
+
+ggplot(xg, aes(x = Player, y = xGDiff, label = xGDiff)) + 
+  geom_segment(aes(y = 0, 
+                   x = Player, 
+                   yend = xGDiff, 
+                   xend = Player), 
+               color = "black") +
+  geom_point(stat = 'identity', aes(fill = ifelse(xGDiff > 0, "Positive", "Negative")), size = 6.3, shape = 21) +
+  geom_text(color = "black", size = 2) +
+  scale_fill_manual(values = c("Positive" = "green", "Negative" = "red")) +
+  labs(title = "", 
+       subtitle = "",
+       fill = "xGDiff") +
+  coord_flip()
+```
+
+
+```{r}
+
+xg$Player <- factor(xg$Player, levels = xg$Player[order(xg$xGDiff)])
+
+ggplot(xg, aes(x = Player, y = xGDiff)) + 
+  geom_bar(stat = 'identity', 
+           aes(fill = ifelse(xGDiff > 0, "Positive", "Negative")), 
+           width = .5) +
+  scale_fill_manual(values = c("Positive" = "green", "Negative" = "red")) +
+  labs(subtitle = "", 
+       title = "",
+       fill="xGDiff") + 
+  coord_flip()
+
+```
+
+
+
