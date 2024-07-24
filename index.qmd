@@ -1,5 +1,5 @@
 ---
-title: "website"
+title: " "
 execute: 
   echo: false
 ---
@@ -34,7 +34,7 @@ players <- read_csv("players.csv")
   # geom_point() 
 ```
 
-
+# Data voyage in Barcelona
 
 ```{r, fig.width=20, fig.height=10}
 #| warning: false
