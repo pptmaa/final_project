@@ -15,12 +15,16 @@ library(ggplot2)
 library(ggtext)
 library(hrbrthemes)
 library(knitr)
+library(leaflet)
+library(ggmap)
 summary <- read_csv("summary.csv")
 offensive <- read_csv("offensive.csv")
 xg <- read_csv("xg.csv")
 passing <- read_csv("passing.csv")
 away <- read_csv("away.csv")
 home <- read_csv("home.csv")
+teams <- read_csv("teams.csv")
+players <- read_csv("players.csv")
 ```
 
 
@@ -78,21 +82,53 @@ ggplot(xg, aes(x = Player, y = xGDiff, label = xGDiff)) +
 ```
 
 
-```{r}
+```{r, fig.width=12, fig.height=9}
+#| warning: false
 
-xg$Player <- factor(xg$Player, levels = xg$Player[order(xg$xGDiff)])
+theme_set(theme_bw())   
 
-ggplot(xg, aes(x = Player, y = xGDiff)) + 
+teams$Team <- factor(teams$Team, levels = teams$Team[order(teams$xGDiff)])
+
+ggplot(teams, aes(x = Team, y = xGDiff)) + 
   geom_bar(stat = 'identity', 
-           aes(fill = ifelse(xGDiff > 0, "Positive", "Negative")), 
-           width = .5) +
-  scale_fill_manual(values = c("Positive" = "green", "Negative" = "red")) +
+           aes(fill = ifelse(Team == "Barcelona", "Special", ifelse(xGDiff > 0, "Positive", "Negative")),
+               width = ifelse(Team %in% c("Barcelona", "Real Madrid"), 0.7, 0.5))) +  
+  scale_fill_manual(values = c("Positive" = "green", "Negative" = "red", "Special" = "black"),
+                    breaks = c("Positive", "Negative")) +
   labs(subtitle = "", 
        title = "",
-       fill="xGDiff") + 
-  coord_flip()
-
+       fill = "xGDiff") + 
+  coord_flip() +
+  theme(axis.text.y = element_text(size = ifelse(levels(teams$Team) %in% c("Barcelona"), 14, 10),
+                                   face = ifelse(levels(teams$Team) %in% c("Barcelona"), "bold", "plain"))) +
+  geom_text(data = subset(teams, Team == "Barcelona"),
+            aes(label = paste0("(", xGDiff, ")")),
+            hjust = 1.2, color = "black", size = 4, fontface = "bold", vjust = 0.35) +
+  geom_text(data = subset(teams, Team == "Real Madrid"),
+            aes(label = paste0("(+", xGDiff, ")")),
+            hjust = 6.5, color = "black", size = 4, fontface = "bold", vjust = 0.3)
 ```
 
+
+
+
+```{r, fig.width=13, fig.height=9}
+leaflet(data = players) %>%
+  addTiles() %>%  # Обычная карта OpenStreetMap
+  setView(lng = 0, lat = 0, zoom = 2) %>%  # Установка начального вида карты
+  addCircleMarkers(
+    ~Long, ~Lat,
+    radius = 8,  # Размер кружков
+    color = ~ifelse(Player == "Spotify Camp Nou", "red", "blue"),  # Цвет кружков
+    fillOpacity = 0.7,
+    popup = ~Player  # Всплывающее окно с именем игрока
+  ) %>%
+  addLegend(
+    position = "bottomright",
+    colors = c("red", "blue"),
+    labels = c("Spotify Camp Nou", "Players"),
+    opacity = 0.7
+  )
+```
 
 

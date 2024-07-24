@@ -24,7 +24,7 @@ home <- read_csv("home.csv")
 
 
 
-library(ggplot2)
+
 library(hrbrthemes)
 
 

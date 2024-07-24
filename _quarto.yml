@@ -7,12 +7,14 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: analysis.qmd
+        text: Data Analysis
       - text: Sources
         menu:
           - href: source-1.qmd
             text: WhoScored
           - href: source-2.qmd
-            text: SofaScored 
+            text: SofaScore 
       - about.qmd
 
 format:
