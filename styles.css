@@ -1,1 +1,253 @@
 /* css styles */
+/* Общие стили для всего сайта */
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  background-color: #f0f2f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Заголовки */
+h1, h2, h3, h4, h5, h6 {
+  color: #2c3e50;
+  margin: 20px 0 10px;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.5em;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+h2 {
+  font-size: 2em;
+  border-bottom: 1px solid #3498db;
+  padding-bottom: 8px;
+}
+
+h3 {
+  font-size: 1.75em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+h5 {
+  font-size: 1.25em;
+}
+
+h6 {
+  font-size: 1em;
+}
+
+/* Ссылки */
+a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Таблицы */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 12px;
+  text-align:  left;
+}
+
+th {
+  background-color: #3498db;
+  color: #fff;
+}
+
+/* Карты Leaflet */
+.leaflet-container {
+  background-color: #eef2f5;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-popup-content {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.leaflet-popup-tip {
+  background: #fff;
+}
+
+.leaflet-control {
+  border: none;
+  background: none;
+}
+
+.leaflet-bar a {
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  text-decoration: none;
+}
+
+.leaflet-bar a:hover {
+  background-color: #f4f4f4;
+}
+
+/* Легенда */
+.leaflet-control-layers .leaflet-control-layers-list {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-control-layers-toggle {
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 8px;
+}
+
+/* Кастомная легенда */
+.custom-legend {
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+.custom-legend img {
+  vertical-align: middle;
+}
+
+.custom-legend span {
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+/* Кнопки */
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Формы */
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="submit"], input[type="reset"] {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover {
+  background-color: #2980b9;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Стили для Quarto блоков */
+.quarto-margin {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quarto-margin h2 {
+  font-size: 1.5em;
+  margin-top: 0;
+}
+
+.quarto-margin h3 {
+  font-size: 1.25em;
+  margin-top: 0;
+}
+
+.quarto-margin p {
+  margin: 0;
+}
+
+.quarto-margin ul, .quarto-margin ol {
+  padding-left: 20px;
+}
+
+.quarto-margin ul {
+  list-style-type: disc;
+}
+
+.quarto-margin ol {
+  list-style-type: decimal;
+}
+
+/* Медиа-запросы для адаптивного дизайна */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  table, th, td {
+    padding: 8px;
+  }
+
+  button {
+    padding: 8px 16px;
+  }
+}
