@@ -1,5 +1,5 @@
 ---
-title: " "
+title: ""
 execute: 
   echo: false
 ---
@@ -34,7 +34,86 @@ players <- read_csv("players.csv")
   # geom_point() 
 ```
 
-# Data voyage in Barcelona
+<h1 style="text-align: center;"> Data voyage in Barcelona</h1>
+
+<h2 style="text-align: center;"> Introduction</h2>
+
+<p>A lot around us is a set of data, but sometimes we don't pay attention to it and perceive it differently. Football is no exception; for some, it is a spectacular game and an evening activity, for others, it is structure, characteristics, and data.</p>
+
+<p>Today, I suggest looking at the game and achievements of **<a href="https://www.fcbarcelona.com/en/">FC Barcelona</a>** in the season 2023/24 from a statistical perspective, rather than from the beauty and aesthetics that many (myself included) usually focus on.</p>
+
+**In general, there are advantages from all sides, so what are they in football data analysis?**
+
+<ul>
+  <li>Data can <u>confirm football successes/failures</u> (rather than many attributing it to luck or divine intervention);</li>
+  <li>Data and statistics often lead to awards and determining the "best" in their field, so while viewing and studying the data, you can <u>resolve the dilemma of the best/worst player</u>, admire, and criticize (because beauty in the game does not always guarantee success);</li>
+  <li>In modern football, it is common to blame the coach in case of team failure, but statistical analysis helps <u>objectively assess the situation</u> and for example clarify whether the coach is to blame or if the players failed to perform their tasks and made many mistakes.</li>
+</ul>
+<hr>
+
+<p>And today I want to prove that each aspect of football statistics and data analysis is interesting in its own way.</p>
+
+<p>What is the first thing that comes to mind when you hear **"Barcelona"**? For some, it's the <u>Sagrada Familia</u>, for others, it's the <u>charming streets</u>, and for some, it's the <u>majestic Camp Nou</u>.</p>
+
+<p>And if we narrow the question, what comes to mind when you hear **"FC Barcelona"**? The <u>stadium</u>, the <u>emblem</u>, the <u>players</u>? Or maybe all of them at once?</p>
+
+<p>Nothing helps visualize thoughts like a map (and it's just cool, and I wanted to make it). So, for your attention, here is a map that is just cool and can also help you geographically assess what and where in FC Barcelona (specifically the <u>players</u> and the <u>stadium</u>).</p>
+
+```{r, fig.width=13, fig.height=9}
+fc_barcelona_logo <- "https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png"
+
+fc_barcelona_icon <- makeIcon(
+  iconUrl = fc_barcelona_logo,
+  iconWidth = 30, iconHeight = 30,
+  iconAnchorX = 15, iconAnchorY = 15
+)
+
+leaflet(data = players) %>%
+  addProviderTiles("OpenStreetMap.Mapnik") %>%  # Обычная карта OpenStreetMap
+  setView(lng = 0, lat = 0, zoom = 2) %>%  # Установка начального вида карты
+  addCircleMarkers(
+    data = subset(players, Player != "Spotify Camp Nou" & Player != "Home"),
+    ~Long, ~Lat,
+    radius = 8,  # Размер кружков
+    color = "blue",  # Цвет кружков
+    fillOpacity = 0.7,
+    popup = ~Player  # Всплывающее окно с именем игрока
+  ) %>%
+  addMarkers(
+    data = subset(players, Player == "Spotify Camp Nou"),
+    ~Long, ~Lat,
+    icon = fc_barcelona_icon,  # Иконка для "Spotify Camp Nou"
+    popup = ~Player  # Всплывающее окно с именем
+  ) %>%
+  addCircleMarkers(
+    data = subset(players, Player == "Home"),
+    ~Long, ~Lat,
+    radius = 8,
+    color = "pink",
+    fillOpacity = 0.7,
+    popup = ~Player
+  ) %>%
+  addControl(
+    html = sprintf('<div style="background-color: white; padding: 5px;"><img src="%s" height="20" style="vertical-align: middle;"> Spotify Camp Nou<br/><span style="color: blue;">&#9679;</span> Players</div>', fc_barcelona_logo),
+    position = "bottomright"
+  )
+``` 
+<br>
+
+<p>As the legend goes (and I mean the legend in the bottom right corner), on our map, you can find the beautiful Camp Nou and the birthplaces of all the team's players. </p>
+<p>***Does the city of a football club's base affect the quantity of players from that area in the team?***</p>
+
+<p>Of course <u>it does</u>, and the map confirms this. The main reason is that children who live near the club's base and are passionate about football go to the academy, and some make it to the main team (of course, the academy has not only Barcelonans, but due to territorial convenience, there are many of them).</p>
+<hr>
+<h2 style="text-align: center;"> Minutes per age</h2>
+<p>The FC Barcelona academy is rightfully considered one of the best in the world, and over the years, talents like <u>Messi</u>, <u>Xavi</u>, <u>Iniesta</u>, <u>Busquets</u>, <u>Alba</u>, <u>Piqué</u>, and the new star <u>Lamine Yamal</u> have emerged from 
+**<a href="https://www.fcbarcelona.com/en/club/identity/la-masia">La Masia</a>**. </p>
+<p>It is a popular opinion that academy graduates are treated favorably, given playing time even if they haven't earned it, while bought players are sometimes overly scrutinized.</p>
+
+<p>Let's use <u>statistics</u> to determine if this expression has merit and look at the trends. To do this, I decided to create a new variable that mathematically equals the ratio of <u>minutes</u> played by a player in season matches to their <u>age</u>. The result is a certain value x, which can be called the coach's <u>trust index</u>, mathematically represented as minutes per year of life.</p>
+
+<p>On the graph below, you can see the ratio of each player to their respective value of our x, sorted from highest to lowest. The age of the player is indicated in parentheses.</p>
+
 
 ```{r, fig.width=20, fig.height=10}
 #| warning: false
@@ -112,23 +191,5 @@ ggplot(teams, aes(x = Team, y = xGDiff)) +
 
 
 
-```{r, fig.width=13, fig.height=9}
-leaflet(data = players) %>%
-  addTiles() %>%  # Обычная карта OpenStreetMap
-  setView(lng = 0, lat = 0, zoom = 2) %>%  # Установка начального вида карты
-  addCircleMarkers(
-    ~Long, ~Lat,
-    radius = 8,  # Размер кружков
-    color = ~ifelse(Player == "Spotify Camp Nou", "red", "blue"),  # Цвет кружков
-    fillOpacity = 0.7,
-    popup = ~Player  # Всплывающее окно с именем игрока
-  ) %>%
-  addLegend(
-    position = "bottomright",
-    colors = c("red", "blue"),
-    labels = c("Spotify Camp Nou", "Players"),
-    opacity = 0.7
-  )
-```
 
 
